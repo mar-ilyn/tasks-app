@@ -7,7 +7,7 @@ export default function Tasks({task, deleteTask, toggleTask}) {
   return (
     <>
         <li className="bg-gray-100 px-4 py-2 mb-4 rounded font-bold flex justify-between items-center shadow">
-            <h2 className={`flex-1 break-words overflow-hidden mr-2 md:mr-4 ${task.done ? "line-through decoration-2" : ""}`}>
+            <h2 className={`flex-1 break-words overflow-hidden mr-2 md:mr-4 text-slate-600 ${task.done ? "line-through decoration-2" : ""}`}>
             {task.description}
             </h2>
             <div className="flex gap-4 items-center">
