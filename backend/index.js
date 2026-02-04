@@ -9,7 +9,7 @@ app.use(express.json());
 
 
 let tasks = [
-  { id: 1, title: "Hacer la app", done: false }
+  { id: 1, description: "Hacer la app", done: false }
 ];
 
 app.get("/api/tasks", (req, res) => {
@@ -17,13 +17,33 @@ app.get("/api/tasks", (req, res) => {
 });
 
 app.post("/api/tasks", (req, res) => {
+  const { description } = req.body;
+
   const newTask = {
     id: Date.now(),
-    title: req.body.title,
-    completed: false
+    description,
+    done: false
   };
   tasks.push(newTask);
   res.status(201).json(newTask);
+});
+
+app.put("/api/tasks/:id", (req, res) => {
+  const id = Number(req.params.id);
+
+  const task = tasks.find(t => t.id === id);
+  if (!task) {
+    return res.status(404).json({ error: "Task not found" });
+  }
+
+  task.done = !task.done;
+  res.json(task);
+});
+
+app.delete("/api/tasks/:id", (req, res) => {
+  const id = Number(req.params.id);
+  tasks = tasks.filter(t => t.id !== id);
+  res.json({ ok: true });
 });
 
 app.listen(PORT, () => {
